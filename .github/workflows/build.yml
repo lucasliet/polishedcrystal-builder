@@ -59,7 +59,6 @@ jobs:
           mv polishedcrystal-3.0.0-beta.gbc build/polishedcrystal-3.0.0-beta-${{ env.SHORT_SHA }}.gbc
           mv polishedcrystal-3.0.0-beta.patch build/polishedcrystal-3.0.0-beta-${{ env.SHORT_SHA }}.patch
           mv polishedcrystal-3.0.0-beta.sym build/polishedcrystal-3.0.0-beta-${{ env.SHORT_SHA }}.sym
-          make tidy
 
       - id: build-polishedcrystal-faithful
         name: "Build polishedcrystal-faithful"
@@ -68,7 +67,6 @@ jobs:
           mv polishedcrystal-faithful-3.0.0-beta.gbc build/polishedcrystal-faithful-3.0.0-beta-${{ env.SHORT_SHA }}.gbc
           mv polishedcrystal-faithful-3.0.0-beta.patch build/polishedcrystal-faithful-3.0.0-beta-${{ env.SHORT_SHA }}.patch
           mv polishedcrystal-faithful-3.0.0-beta.sym build/polishedcrystal-faithful-3.0.0-beta-${{ env.SHORT_SHA }}.sym
-          make tidy
 
       - id: build-polishedcrystal-nortc
         name: "Build polishedcrystal-nortc"
@@ -77,7 +75,6 @@ jobs:
           mv polishedcrystal-nortc-3.0.0-beta.gbc build/polishedcrystal-nortc-3.0.0-beta-${{ env.SHORT_SHA }}.gbc
           mv polishedcrystal-nortc-3.0.0-beta.patch build/polishedcrystal-nortc-3.0.0-beta-${{ env.SHORT_SHA }}.patch
           mv polishedcrystal-nortc-3.0.0-beta.sym build/polishedcrystal-nortc-3.0.0-beta-${{ env.SHORT_SHA }}.sym
-          make tidy
 
       - id: build-polishedcrystal-faithful-nortc
         name: "Build polishedcrystal-faithful-nortc"
@@ -86,7 +83,6 @@ jobs:
           mv polishedcrystal-faithful-nortc-3.0.0-beta.gbc build/polishedcrystal-faithful-nortc-3.0.0-beta-${{ env.SHORT_SHA }}.gbc
           mv polishedcrystal-faithful-nortc-3.0.0-beta.patch build/polishedcrystal-faithful-nortc-3.0.0-beta-${{ env.SHORT_SHA }}.patch
           mv polishedcrystal-faithful-nortc-3.0.0-beta.sym build/polishedcrystal-faithful-nortc-3.0.0-beta-${{ env.SHORT_SHA }}.sym
-          make tidy
 
       # BUILD DEBUG ROMS
       - id: build-polisheddebug
@@ -96,7 +92,6 @@ jobs:
           mv polishedcrystal-debug-3.0.0-beta.gbc build/polisheddebug-3.0.0-beta-${{ env.SHORT_SHA }}.gbc
           mv polishedcrystal-debug-3.0.0-beta.patch build/polisheddebug-3.0.0-beta-${{ env.SHORT_SHA }}.patch
           mv polishedcrystal-debug-3.0.0-beta.sym build/polisheddebug-3.0.0-beta-${{ env.SHORT_SHA }}.sym
-          make tidy
 
       - id: build-polisheddebug-faithful
         name: "Build polisheddebug-faithful"
@@ -105,7 +100,6 @@ jobs:
           mv polishedcrystal-faithful-debug-3.0.0-beta.gbc build/polisheddebug-faithful-3.0.0-beta-${{ env.SHORT_SHA }}.gbc
           mv polishedcrystal-faithful-debug-3.0.0-beta.patch build/polisheddebug-faithful-3.0.0-beta-${{ env.SHORT_SHA }}.patch
           mv polishedcrystal-faithful-debug-3.0.0-beta.sym build/polisheddebug-faithful-3.0.0-beta-${{ env.SHORT_SHA }}.sym
-          make tidy
 
       - id: build-polisheddebug-nortc
         name: "Build polisheddebug-nortc"
@@ -114,7 +108,6 @@ jobs:
           mv polishedcrystal-nortc-debug-3.0.0-beta.gbc build/polisheddebug-nortc-3.0.0-beta-${{ env.SHORT_SHA }}.gbc
           mv polishedcrystal-nortc-debug-3.0.0-beta.patch build/polisheddebug-nortc-3.0.0-beta-${{ env.SHORT_SHA }}.patch
           mv polishedcrystal-nortc-debug-3.0.0-beta.sym build/polisheddebug-nortc-3.0.0-beta-${{ env.SHORT_SHA }}.sym
-          make tidy
 
       - id: build-polisheddebug-faithful-nortc
         name: "Build polisheddebug-faithful-nortc"
@@ -123,7 +116,6 @@ jobs:
           mv polishedcrystal-faithful-nortc-debug-3.0.0-beta.gbc build/polisheddebug-faithful-nortc-3.0.0-beta-${{ env.SHORT_SHA }}.gbc
           mv polishedcrystal-faithful-nortc-debug-3.0.0-beta.patch build/polisheddebug-faithful-nortc-3.0.0-beta-${{ env.SHORT_SHA }}.patch
           mv polishedcrystal-faithful-nortc-debug-3.0.0-beta.sym build/polisheddebug-faithful-nortc-3.0.0-beta-${{ env.SHORT_SHA }}.sym
-          make tidy
 
       # BUILD SAVE PATCH
       - id: build-polishedcrystal-bsp
@@ -131,7 +123,6 @@ jobs:
         run: |
           make -j$(nproc) bsp
           mv polishedcrystal-3.0.0-beta.bsp build/polishedcrystal-savepatch-3.0.0-beta-${{ env.SHORT_SHA }}.bsp
-          make tidy
 
       # UPLOAD ARTIFACTS
       - id: upload-polishedcrystal

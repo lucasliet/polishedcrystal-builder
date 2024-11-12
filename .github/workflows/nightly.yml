@@ -43,15 +43,6 @@ jobs:
         run: |
           echo "SHORT_SHA=$(curl -s https://api.github.com/repos/Rangi42/polishedcrystal/commits/9bit | jq -r '.sha' | cut -c1-8)" >> $GITHUB_ENV
 
-      # CHECKOUT REPOSITORY
-      - id: checkout-polishedcrystal
-        name: "Checkout Rangi42/polishedcrystal"
-        uses: actions/checkout@v4
-        with:
-          repository: Rangi42/polishedcrystal
-          path: .
-          ref: 9bit
-
       # DOWNLOAD ALL BUILD ARTIFACTS
       - id: download-polishedcrystal
         name: "Download polishedcrystal"
@@ -113,5 +104,6 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: "./build/*"
-          tag: ${{ env.NIGHTLY_TAG }}
+          tag: ${{ env.NIGHTLY_TAG }}-ghrun+${{ github.run_number }}
+          token: ${{ secrets.GH_RELEASE_TOKEN }}
           removeArtifacts: true
