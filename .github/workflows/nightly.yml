@@ -9,7 +9,7 @@ on:
     branches:
       - main
   schedule:
-     - cron: '0 5 * * 5'
+     - cron: '0 7 * * 5'
   workflow_dispatch:
 
 env:
@@ -34,10 +34,10 @@ jobs:
     runs-on: ubuntu-latest
     outputs: 
       should_compile: ${{ steps.check-if-should-compile.outputs.should_compile }}
-      short_sha: ${{ steps.set-env-var.outputs.short_sha }}
+      short_sha: ${{ steps.set-sha.outputs.short_sha }}
     steps:
-      - id: set-env-var
-        name: "Set environment variables"
+      - id: set-sha
+        name: "Get latest Rangi42 short commit SHA"
         run: |
           echo "short_sha=$(curl -s https://api.github.com/repos/Rangi42/polishedcrystal/commits/9bit | jq -r '.sha' | cut -c1-8)" >> $GITHUB_OUTPUT
 
@@ -47,7 +47,7 @@ jobs:
       - id: check-if-should-compile
         name: "Check if should compile"
         run: |
-          tag="${{ env.NIGHTLY_TAG }}-${{ steps.set-env-var.outputs.short_sha }}"
+          tag="${{ env.NIGHTLY_TAG }}-${{ steps.set-sha.outputs.short_sha }}"
           previous_tag=$(curl -s https://api.github.com/repos/lucasliet/polishedcrystal-builder/tags | jq -r '.[0].name')
           if [ $tag = $previous_tag ]; then
             echo "Compile is unecessary, latest commit already compiled $tag"
