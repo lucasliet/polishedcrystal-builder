@@ -29,20 +29,45 @@ env:
     The **polisheddebug** assets are ROMs and symbol files with extra features to help debug the game. Do ***not*** download these to just play with; use them to help the developers diagnose and fix bugs, or create new features.
 
 jobs:
-  build:
-    name: "Release"
-    uses: lucasliet/polishedcrystal-builder/.github/workflows/build.yml@main
-  release:
-    name: "Release / Publish"
+  check-build:
+    name: "Check Build"
     runs-on: ubuntu-latest
-    needs: build
+    outputs: 
+      should_compile: ${{ steps.check-if-should-compile.outputs.should_compile }}
+      short_sha: ${{ steps.set-env-var.outputs.short_sha }}
     steps:
-      # SET ENVIRONMENT VARIABLES
       - id: set-env-var
         name: "Set environment variables"
         run: |
-          echo "SHORT_SHA=$(curl -s https://api.github.com/repos/Rangi42/polishedcrystal/commits/9bit | jq -r '.sha' | cut -c1-8)" >> $GITHUB_ENV
+          echo "short_sha=$(curl -s https://api.github.com/repos/Rangi42/polishedcrystal/commits/9bit | jq -r '.sha' | cut -c1-8)" >> $GITHUB_OUTPUT
 
+      - name: "Checkout repository"
+        uses: actions/checkout@v4
+
+      - id: check-if-should-compile
+        name: "Check if should compile"
+        run: |
+          tag="${{ env.NIGHTLY_TAG }}-${{ steps.set-env-var.outputs.short_sha }}"
+          previous_tag=$(curl -s https://api.github.com/repos/lucasliet/polishedcrystal-builder/tags | jq -r '.[0].name')
+          if [ $tag = $previous_tag ]; then
+            echo "Compile is unecessary, latest commit already compiled $tag"
+            echo "should_compile=false" >> $GITHUB_OUTPUT
+          else
+            echo "tag $tag is newer than $previous_tag, proceeding..."
+            echo "should_compile=true" >> $GITHUB_OUTPUT
+          fi
+
+  build:
+    name: "Release"
+    needs: check-build
+    if: ${{ needs.check-build.outputs.should_compile }}
+    uses: lucasliet/polishedcrystal-builder/.github/workflows/build.yml@main
+
+  release:
+    name: "Release / Publish"
+    runs-on: ubuntu-latest
+    needs: [check-build, build]
+    steps:
       # DOWNLOAD ALL BUILD ARTIFACTS
       - id: download-polishedcrystal
         name: "Download polishedcrystal"
@@ -104,6 +129,10 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: "./build/*"
-          tag: ${{ env.NIGHTLY_TAG }}-ghrun+${{ github.run_number }}
+          tag: ${{ env.NIGHTLY_TAG }}-${{ needs.check-build.outputs.short_sha }}
           token: ${{ secrets.GH_RELEASE_TOKEN }}
           removeArtifacts: true
+          prerelease: true
+          body: |
+            compile from commit: https://github.com/Rangi42/polishedcrystal/commit/${{ needs.check-build.outputs.short_sha }}
+            ${{ env.NIGHTLY_BODY }}
