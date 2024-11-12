@@ -12,5 +12,6 @@ any instructions you may need, please read the original source from Rangi42's re
 
 there's also a 9bit test channel on their [Discord server](https://discord.com/invite/ZK5pqK8)
 
+there is a trigger that checks everyday for a new commit and build a new release at morning if so
 ---
-EDIT: i've made a trigger to run a new release [every friday at 7am](https://github.com/lucasliet/polishedcrystal-builder/blob/ab87799a0ef3cc69b0c7e59941e4b3fe57a4da6b/.github/workflows/nightly.yml#L12) if there's a new commit on 9bit branch
+mirror: https://pc9bit.ministryofinternet.eu/
