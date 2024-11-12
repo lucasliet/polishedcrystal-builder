@@ -51,7 +51,6 @@ jobs:
           previous_tag=$(curl -s https://api.github.com/repos/lucasliet/polishedcrystal-builder/tags | jq -r '.[0].name')
           if [ $tag = $previous_tag ]; then
             echo "Compile is unecessary, latest commit already compiled $tag"
-            echo "should_compile=false" >> $GITHUB_OUTPUT
           else
             echo "tag $tag is newer than $previous_tag, proceeding..."
             echo "should_compile=true" >> $GITHUB_OUTPUT
