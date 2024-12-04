@@ -130,115 +130,115 @@ jobs:
             build/polishedcrystal-faithful-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.*
 
       
-  build-polishedcrystal-nortc:
-    name: "Build polishedcrystal-nortc"
-    needs: get-sha
-    runs-on: ubuntu-latest
-    steps:
-      # INSTALL DEPENDENCIES
-      - id: apt-get-depends
-        name: "Install build dependencies"
-        run: |
-          sudo apt-get update
-          sudo apt-get install bison gcc git make -y;
+  # build-polishedcrystal-nortc:
+  #   name: "Build polishedcrystal-nortc"
+  #   needs: get-sha
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     # INSTALL DEPENDENCIES
+  #     - id: apt-get-depends
+  #       name: "Install build dependencies"
+  #       run: |
+  #         sudo apt-get update
+  #         sudo apt-get install bison gcc git make -y;
 
-      # CHECKOUT RGBDS
-      - id: checkout-rgbds
-        name: "Checkout gbdev/rgbds"
-        uses: actions/checkout@v4
-        with:
-          path: rgbds
-          ref: ${{ env.RGBDS_VERSION }}
-          repository: gbdev/rgbds
+  #     # CHECKOUT RGBDS
+  #     - id: checkout-rgbds
+  #       name: "Checkout gbdev/rgbds"
+  #       uses: actions/checkout@v4
+  #       with:
+  #         path: rgbds
+  #         ref: ${{ env.RGBDS_VERSION }}
+  #         repository: gbdev/rgbds
 
-      # INSTALL RGBDS
-      - id: install-rgbds
-        name: "Install gbdev/rgbds"
-        working-directory: rgbds
-        run: |
-          sudo make install
+  #     # INSTALL RGBDS
+  #     - id: install-rgbds
+  #       name: "Install gbdev/rgbds"
+  #       working-directory: rgbds
+  #       run: |
+  #         sudo make install
 
-      # CHECKOUT REPOSITORY
-      - id: checkout-polishedcrystal
-        name: "Checkout Rangi42/polishedcrystal"
-        uses: actions/checkout@v4
-        with:
-          repository: Rangi42/polishedcrystal
-          path: .
-          ref: 9bit
+  #     # CHECKOUT REPOSITORY
+  #     - id: checkout-polishedcrystal
+  #       name: "Checkout Rangi42/polishedcrystal"
+  #       uses: actions/checkout@v4
+  #       with:
+  #         repository: Rangi42/polishedcrystal
+  #         path: .
+  #         ref: 9bit
 
-      - id: build-polishedcrystal-nortc
-        name: "Build polishedcrystal-nortc"
-        run: |
-          make -j$(nproc) nortc vc
-          mkdir build
-          mv polishedcrystal-nortc-3.0.0-beta.gbc build/polishedcrystal-nortc-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.gbc
-          mv polishedcrystal-nortc-3.0.0-beta.patch build/polishedcrystal-nortc-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.patch
-          mv polishedcrystal-nortc-3.0.0-beta.sym build/polishedcrystal-nortc-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.sym
+  #     - id: build-polishedcrystal-nortc
+  #       name: "Build polishedcrystal-nortc"
+  #       run: |
+  #         make -j$(nproc) nortc vc
+  #         mkdir build
+  #         mv polishedcrystal-nortc-3.0.0-beta.gbc build/polishedcrystal-nortc-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.gbc
+  #         mv polishedcrystal-nortc-3.0.0-beta.patch build/polishedcrystal-nortc-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.patch
+  #         mv polishedcrystal-nortc-3.0.0-beta.sym build/polishedcrystal-nortc-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.sym
       
-      - id: upload-polishedcrystal-nortc
-        name: "Upload polishedcrystal-nortc artifacts"
-        uses: actions/upload-artifact@v4
-        with:
-          name: "polishedcrystal-nortc"
-          retention-days: 1
-          path: |
-            build/polishedcrystal-nortc-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.*
+  #     - id: upload-polishedcrystal-nortc
+  #       name: "Upload polishedcrystal-nortc artifacts"
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: "polishedcrystal-nortc"
+  #         retention-days: 1
+  #         path: |
+  #           build/polishedcrystal-nortc-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.*
       
-  build-polishedcrystal-faithful-nortc:
-    name: "Build polishedcrystal-faithful-nortc"
-    needs: get-sha
-    runs-on: ubuntu-latest
-    steps:
-      # INSTALL DEPENDENCIES
-      - id: apt-get-depends
-        name: "Install build dependencies"
-        run: |
-          sudo apt-get update
-          sudo apt-get install bison gcc git make -y;
+  # build-polishedcrystal-faithful-nortc:
+  #   name: "Build polishedcrystal-faithful-nortc"
+  #   needs: get-sha
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     # INSTALL DEPENDENCIES
+  #     - id: apt-get-depends
+  #       name: "Install build dependencies"
+  #       run: |
+  #         sudo apt-get update
+  #         sudo apt-get install bison gcc git make -y;
 
-      # CHECKOUT RGBDS
-      - id: checkout-rgbds
-        name: "Checkout gbdev/rgbds"
-        uses: actions/checkout@v4
-        with:
-          path: rgbds
-          ref: ${{ env.RGBDS_VERSION }}
-          repository: gbdev/rgbds
+  #     # CHECKOUT RGBDS
+  #     - id: checkout-rgbds
+  #       name: "Checkout gbdev/rgbds"
+  #       uses: actions/checkout@v4
+  #       with:
+  #         path: rgbds
+  #         ref: ${{ env.RGBDS_VERSION }}
+  #         repository: gbdev/rgbds
 
-      # INSTALL RGBDS
-      - id: install-rgbds
-        name: "Install gbdev/rgbds"
-        working-directory: rgbds
-        run: |
-          sudo make install
+  #     # INSTALL RGBDS
+  #     - id: install-rgbds
+  #       name: "Install gbdev/rgbds"
+  #       working-directory: rgbds
+  #       run: |
+  #         sudo make install
 
-      # CHECKOUT REPOSITORY
-      - id: checkout-polishedcrystal
-        name: "Checkout Rangi42/polishedcrystal"
-        uses: actions/checkout@v4
-        with:
-          repository: Rangi42/polishedcrystal
-          path: .
-          ref: 9bit
+  #     # CHECKOUT REPOSITORY
+  #     - id: checkout-polishedcrystal
+  #       name: "Checkout Rangi42/polishedcrystal"
+  #       uses: actions/checkout@v4
+  #       with:
+  #         repository: Rangi42/polishedcrystal
+  #         path: .
+  #         ref: 9bit
 
-      - id: build-polishedcrystal-faithful-nortc
-        name: "Build polishedcrystal-faithful-nortc"
-        run: |
-          make -j$(nproc) faithful nortc vc
-          mkdir build
-          mv polishedcrystal-faithful-nortc-3.0.0-beta.gbc build/polishedcrystal-faithful-nortc-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.gbc
-          mv polishedcrystal-faithful-nortc-3.0.0-beta.patch build/polishedcrystal-faithful-nortc-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.patch
-          mv polishedcrystal-faithful-nortc-3.0.0-beta.sym build/polishedcrystal-faithful-nortc-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.sym
+  #     - id: build-polishedcrystal-faithful-nortc
+  #       name: "Build polishedcrystal-faithful-nortc"
+  #       run: |
+  #         make -j$(nproc) faithful nortc vc
+  #         mkdir build
+  #         mv polishedcrystal-faithful-nortc-3.0.0-beta.gbc build/polishedcrystal-faithful-nortc-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.gbc
+  #         mv polishedcrystal-faithful-nortc-3.0.0-beta.patch build/polishedcrystal-faithful-nortc-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.patch
+  #         mv polishedcrystal-faithful-nortc-3.0.0-beta.sym build/polishedcrystal-faithful-nortc-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.sym
           
-      - id: upload-polishedcrystal-faithful-nortc
-        name: "Upload polishedcrystal-faithful-nortc artifacts"
-        uses: actions/upload-artifact@v4
-        with:
-          name: "polishedcrystal-faithful-nortc"
-          retention-days: 1
-          path: |
-            build/polishedcrystal-faithful-nortc-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.*
+  #     - id: upload-polishedcrystal-faithful-nortc
+  #       name: "Upload polishedcrystal-faithful-nortc artifacts"
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: "polishedcrystal-faithful-nortc"
+  #         retention-days: 1
+  #         path: |
+  #           build/polishedcrystal-faithful-nortc-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.*
 
       
       
@@ -353,115 +353,115 @@ jobs:
           path: |
             build/polisheddebug-faithful-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.*
       
-  build-polisheddebug-nortc:
-    name: "Build polisheddebug-nortc"
-    needs: get-sha
-    runs-on: ubuntu-latest
-    steps:
-      # INSTALL DEPENDENCIES
-      - id: apt-get-depends
-        name: "Install build dependencies"
-        run: |
-          sudo apt-get update
-          sudo apt-get install bison gcc git make -y;
+  # build-polisheddebug-nortc:
+  #   name: "Build polisheddebug-nortc"
+  #   needs: get-sha
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     # INSTALL DEPENDENCIES
+  #     - id: apt-get-depends
+  #       name: "Install build dependencies"
+  #       run: |
+  #         sudo apt-get update
+  #         sudo apt-get install bison gcc git make -y;
 
-      # CHECKOUT RGBDS
-      - id: checkout-rgbds
-        name: "Checkout gbdev/rgbds"
-        uses: actions/checkout@v4
-        with:
-          path: rgbds
-          ref: ${{ env.RGBDS_VERSION }}
-          repository: gbdev/rgbds
+  #     # CHECKOUT RGBDS
+  #     - id: checkout-rgbds
+  #       name: "Checkout gbdev/rgbds"
+  #       uses: actions/checkout@v4
+  #       with:
+  #         path: rgbds
+  #         ref: ${{ env.RGBDS_VERSION }}
+  #         repository: gbdev/rgbds
 
-      # INSTALL RGBDS
-      - id: install-rgbds
-        name: "Install gbdev/rgbds"
-        working-directory: rgbds
-        run: |
-          sudo make install
+  #     # INSTALL RGBDS
+  #     - id: install-rgbds
+  #       name: "Install gbdev/rgbds"
+  #       working-directory: rgbds
+  #       run: |
+  #         sudo make install
 
-      # CHECKOUT REPOSITORY
-      - id: checkout-polishedcrystal
-        name: "Checkout Rangi42/polishedcrystal"
-        uses: actions/checkout@v4
-        with:
-          repository: Rangi42/polishedcrystal
-          path: .
-          ref: 9bit
+  #     # CHECKOUT REPOSITORY
+  #     - id: checkout-polishedcrystal
+  #       name: "Checkout Rangi42/polishedcrystal"
+  #       uses: actions/checkout@v4
+  #       with:
+  #         repository: Rangi42/polishedcrystal
+  #         path: .
+  #         ref: 9bit
 
-      - id: build-polisheddebug-nortc
-        name: "Build polisheddebug-nortc"
-        run: |
-          make -j$(nproc) nortc debug vc
-          mkdir build
-          mv polishedcrystal-nortc-debug-3.0.0-beta.gbc build/polisheddebug-nortc-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.gbc
-          mv polishedcrystal-nortc-debug-3.0.0-beta.patch build/polisheddebug-nortc-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.patch
-          mv polishedcrystal-nortc-debug-3.0.0-beta.sym build/polisheddebug-nortc-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.sym
+  #     - id: build-polisheddebug-nortc
+  #       name: "Build polisheddebug-nortc"
+  #       run: |
+  #         make -j$(nproc) nortc debug vc
+  #         mkdir build
+  #         mv polishedcrystal-nortc-debug-3.0.0-beta.gbc build/polisheddebug-nortc-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.gbc
+  #         mv polishedcrystal-nortc-debug-3.0.0-beta.patch build/polisheddebug-nortc-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.patch
+  #         mv polishedcrystal-nortc-debug-3.0.0-beta.sym build/polisheddebug-nortc-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.sym
       
-      - id: upload-polisheddebug-nortc
-        name: "Upload polisheddebug-nortc artifacts"
-        uses: actions/upload-artifact@v4
-        with:
-          name: "polisheddebug-nortc"
-          retention-days: 1
-          path: |
-            build/polisheddebug-nortc-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.*
+  #     - id: upload-polisheddebug-nortc
+  #       name: "Upload polisheddebug-nortc artifacts"
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: "polisheddebug-nortc"
+  #         retention-days: 1
+  #         path: |
+  #           build/polisheddebug-nortc-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.*
       
-  build-polisheddebug-faithful-nortc:
-    name: "Build polisheddebug-faithful-nortc"
-    needs: get-sha
-    runs-on: ubuntu-latest
-    steps:
-      # INSTALL DEPENDENCIES
-      - id: apt-get-depends
-        name: "Install build dependencies"
-        run: |
-          sudo apt-get update
-          sudo apt-get install bison gcc git make -y;
+  # build-polisheddebug-faithful-nortc:
+  #   name: "Build polisheddebug-faithful-nortc"
+  #   needs: get-sha
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     # INSTALL DEPENDENCIES
+  #     - id: apt-get-depends
+  #       name: "Install build dependencies"
+  #       run: |
+  #         sudo apt-get update
+  #         sudo apt-get install bison gcc git make -y;
 
-      # CHECKOUT RGBDS
-      - id: checkout-rgbds
-        name: "Checkout gbdev/rgbds"
-        uses: actions/checkout@v4
-        with:
-          path: rgbds
-          ref: ${{ env.RGBDS_VERSION }}
-          repository: gbdev/rgbds
+  #     # CHECKOUT RGBDS
+  #     - id: checkout-rgbds
+  #       name: "Checkout gbdev/rgbds"
+  #       uses: actions/checkout@v4
+  #       with:
+  #         path: rgbds
+  #         ref: ${{ env.RGBDS_VERSION }}
+  #         repository: gbdev/rgbds
 
-      # INSTALL RGBDS
-      - id: install-rgbds
-        name: "Install gbdev/rgbds"
-        working-directory: rgbds
-        run: |
-          sudo make install
+  #     # INSTALL RGBDS
+  #     - id: install-rgbds
+  #       name: "Install gbdev/rgbds"
+  #       working-directory: rgbds
+  #       run: |
+  #         sudo make install
 
-      # CHECKOUT REPOSITORY
-      - id: checkout-polishedcrystal
-        name: "Checkout Rangi42/polishedcrystal"
-        uses: actions/checkout@v4
-        with:
-          repository: Rangi42/polishedcrystal
-          path: .
-          ref: 9bit
+  #     # CHECKOUT REPOSITORY
+  #     - id: checkout-polishedcrystal
+  #       name: "Checkout Rangi42/polishedcrystal"
+  #       uses: actions/checkout@v4
+  #       with:
+  #         repository: Rangi42/polishedcrystal
+  #         path: .
+  #         ref: 9bit
 
-      - id: build-polisheddebug-faithful-nortc
-        name: "Build polisheddebug-faithful-nortc"
-        run: |
-          make -j$(nproc) faithful nortc debug vc
-          mkdir build
-          mv polishedcrystal-faithful-nortc-debug-3.0.0-beta.gbc build/polisheddebug-faithful-nortc-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.gbc
-          mv polishedcrystal-faithful-nortc-debug-3.0.0-beta.patch build/polisheddebug-faithful-nortc-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.patch
-          mv polishedcrystal-faithful-nortc-debug-3.0.0-beta.sym build/polisheddebug-faithful-nortc-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.sym
+  #     - id: build-polisheddebug-faithful-nortc
+  #       name: "Build polisheddebug-faithful-nortc"
+  #       run: |
+  #         make -j$(nproc) faithful nortc debug vc
+  #         mkdir build
+  #         mv polishedcrystal-faithful-nortc-debug-3.0.0-beta.gbc build/polisheddebug-faithful-nortc-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.gbc
+  #         mv polishedcrystal-faithful-nortc-debug-3.0.0-beta.patch build/polisheddebug-faithful-nortc-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.patch
+  #         mv polishedcrystal-faithful-nortc-debug-3.0.0-beta.sym build/polisheddebug-faithful-nortc-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.sym
       
-      - id: upload-polisheddebug-faithful-nortc
-        name: "Upload polisheddebug-faithful-nortc artifacts"
-        uses: actions/upload-artifact@v4
-        with:
-          name: "polisheddebug-faithful-nortc"
-          retention-days: 1
-          path: |
-            build/polisheddebug-faithful-nortc-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.*
+  #     - id: upload-polisheddebug-faithful-nortc
+  #       name: "Upload polisheddebug-faithful-nortc artifacts"
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: "polisheddebug-faithful-nortc"
+  #         retention-days: 1
+  #         path: |
+  #           build/polisheddebug-faithful-nortc-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.*
 
       
   build-polishedcrystal-bsp:
