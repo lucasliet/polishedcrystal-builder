@@ -131,7 +131,7 @@ jobs:
           tag: ${{ env.NIGHTLY_TAG }}-${{ needs.check-build.outputs.short_sha }}
           token: ${{ secrets.GH_RELEASE_TOKEN }}
           removeArtifacts: true
-          prerelease: true
+          prerelease: false
           body: |
             compile from commit: https://github.com/Rangi42/polishedcrystal/commit/${{ needs.check-build.outputs.short_sha }}
             ${{ env.NIGHTLY_BODY }}
