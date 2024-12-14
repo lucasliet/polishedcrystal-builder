@@ -29,7 +29,7 @@ jobs:
         name: "Install build dependencies"
         run: |
           sudo apt-get update
-          sudo apt-get install bison gcc git make -y;
+          sudo apt-get install bison gcc git make libpng-dev -y;
 
       # CHECKOUT RGBDS
       - id: checkout-rgbds
@@ -84,7 +84,7 @@ jobs:
         name: "Install build dependencies"
         run: |
           sudo apt-get update
-          sudo apt-get install bison gcc git make -y;
+          sudo apt-get install bison gcc git make libpng-dev -y;
 
       # CHECKOUT RGBDS
       - id: checkout-rgbds
@@ -140,7 +140,7 @@ jobs:
   #       name: "Install build dependencies"
   #       run: |
   #         sudo apt-get update
-  #         sudo apt-get install bison gcc git make -y;
+  #         sudo apt-get install bison gcc git make libpng-dev -y;
 
   #     # CHECKOUT RGBDS
   #     - id: checkout-rgbds
@@ -195,7 +195,7 @@ jobs:
   #       name: "Install build dependencies"
   #       run: |
   #         sudo apt-get update
-  #         sudo apt-get install bison gcc git make -y;
+  #         sudo apt-get install bison gcc git make libpng-dev -y;
 
   #     # CHECKOUT RGBDS
   #     - id: checkout-rgbds
@@ -252,7 +252,7 @@ jobs:
         name: "Install build dependencies"
         run: |
           sudo apt-get update
-          sudo apt-get install bison gcc git make -y;
+          sudo apt-get install bison gcc git make libpng-dev -y;
 
       # CHECKOUT RGBDS
       - id: checkout-rgbds
@@ -308,7 +308,7 @@ jobs:
         name: "Install build dependencies"
         run: |
           sudo apt-get update
-          sudo apt-get install bison gcc git make -y;
+          sudo apt-get install bison gcc git make libpng-dev -y;
 
       # CHECKOUT RGBDS
       - id: checkout-rgbds
@@ -363,7 +363,7 @@ jobs:
   #       name: "Install build dependencies"
   #       run: |
   #         sudo apt-get update
-  #         sudo apt-get install bison gcc git make -y;
+  #         sudo apt-get install bison gcc git make libpng-dev -y;
 
   #     # CHECKOUT RGBDS
   #     - id: checkout-rgbds
@@ -418,7 +418,7 @@ jobs:
   #       name: "Install build dependencies"
   #       run: |
   #         sudo apt-get update
-  #         sudo apt-get install bison gcc git make -y;
+  #         sudo apt-get install bison gcc git make libpng-dev -y;
 
   #     # CHECKOUT RGBDS
   #     - id: checkout-rgbds
@@ -474,7 +474,7 @@ jobs:
         name: "Install build dependencies"
         run: |
           sudo apt-get update
-          sudo apt-get install bison gcc git make -y;
+          sudo apt-get install bison gcc git make libpng-dev -y;
 
       # CHECKOUT RGBDS
       - id: checkout-rgbds
