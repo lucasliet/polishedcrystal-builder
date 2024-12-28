@@ -34,7 +34,7 @@ jobs:
         name: "Install gbdev/rgbds"
         working-directory: rgbds
         run: |
-          sudo make install
+          sudo make -j$(nproc) install
 
       - id: checkout-polishedcrystal
         name: "Checkout Rangi42/polishedcrystal"
@@ -84,7 +84,7 @@ jobs:
         name: "Install gbdev/rgbds"
         working-directory: rgbds
         run: |
-          sudo make install
+          sudo make -j$(nproc) install
 
       - id: checkout-polishedcrystal
         name: "Checkout Rangi42/polishedcrystal"
@@ -134,7 +134,7 @@ jobs:
         name: "Install gbdev/rgbds"
         working-directory: rgbds
         run: |
-          sudo make install
+          sudo make -j$(nproc) install
 
       - id: checkout-polishedcrystal
         name: "Checkout Rangi42/polishedcrystal"
@@ -185,7 +185,7 @@ jobs:
         name: "Install gbdev/rgbds"
         working-directory: rgbds
         run: |
-          sudo make install
+          sudo make -j$(nproc) install
 
       - id: checkout-polishedcrystal
         name: "Checkout Rangi42/polishedcrystal"
@@ -235,7 +235,7 @@ jobs:
         name: "Install gbdev/rgbds"
         working-directory: rgbds
         run: |
-          sudo make install
+          sudo make -j$(nproc) install
 
       - id: checkout-polishedcrystal
         name: "Checkout Rangi42/polishedcrystal"
