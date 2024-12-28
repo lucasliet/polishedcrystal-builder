@@ -1,4 +1,3 @@
-# Continuous Integration Workflow
 name: "CI Build"
 
 on:
@@ -17,14 +16,12 @@ jobs:
     name: "Build polishedcrystal"
     runs-on: ubuntu-latest
     steps:
-      # INSTALL DEPENDENCIES
       - id: apt-get-depends
         name: "Install build dependencies"
         run: |
           sudo apt-get update
           sudo apt-get install bison gcc git make libpng-dev -y;
 
-      # CHECKOUT RGBDS
       - id: checkout-rgbds
         name: "Checkout gbdev/rgbds"
         uses: actions/checkout@v4
@@ -33,21 +30,19 @@ jobs:
           ref: ${{ env.RGBDS_VERSION }}
           repository: gbdev/rgbds
 
-      # INSTALL RGBDS
       - id: install-rgbds
         name: "Install gbdev/rgbds"
         working-directory: rgbds
         run: |
           sudo make install
 
-      # CHECKOUT REPOSITORY
       - id: checkout-polishedcrystal
         name: "Checkout Rangi42/polishedcrystal"
         uses: actions/checkout@v4
         with:
           repository: Rangi42/polishedcrystal
           path: .
-          ref: 9bit
+          ref: ${{ github.event.inputs.commit }}
       
       - id: build-polishedcrystal
         name: "Build polishedcrystal"
@@ -71,14 +66,12 @@ jobs:
     name: "Build polishedcrystal-faithful"
     runs-on: ubuntu-latest
     steps:
-      # INSTALL DEPENDENCIES
       - id: apt-get-depends
         name: "Install build dependencies"
         run: |
           sudo apt-get update
           sudo apt-get install bison gcc git make libpng-dev -y;
 
-      # CHECKOUT RGBDS
       - id: checkout-rgbds
         name: "Checkout gbdev/rgbds"
         uses: actions/checkout@v4
@@ -87,21 +80,19 @@ jobs:
           ref: ${{ env.RGBDS_VERSION }}
           repository: gbdev/rgbds
 
-      # INSTALL RGBDS
       - id: install-rgbds
         name: "Install gbdev/rgbds"
         working-directory: rgbds
         run: |
           sudo make install
 
-      # CHECKOUT REPOSITORY
       - id: checkout-polishedcrystal
         name: "Checkout Rangi42/polishedcrystal"
         uses: actions/checkout@v4
         with:
           repository: Rangi42/polishedcrystal
           path: .
-          ref: 9bit
+          ref: ${{ github.event.inputs.commit }}
   
       - id: build-polishedcrystal-faithful
         name: "Build polishedcrystal-faithful"
@@ -125,14 +116,12 @@ jobs:
     name: "Build polisheddebug"
     runs-on: ubuntu-latest
     steps:
-      # INSTALL DEPENDENCIES
       - id: apt-get-depends
         name: "Install build dependencies"
         run: |
           sudo apt-get update
           sudo apt-get install bison gcc git make libpng-dev -y;
 
-      # CHECKOUT RGBDS
       - id: checkout-rgbds
         name: "Checkout gbdev/rgbds"
         uses: actions/checkout@v4
@@ -141,21 +130,19 @@ jobs:
           ref: ${{ env.RGBDS_VERSION }}
           repository: gbdev/rgbds
 
-      # INSTALL RGBDS
       - id: install-rgbds
         name: "Install gbdev/rgbds"
         working-directory: rgbds
         run: |
           sudo make install
 
-      # CHECKOUT REPOSITORY
       - id: checkout-polishedcrystal
         name: "Checkout Rangi42/polishedcrystal"
         uses: actions/checkout@v4
         with:
           repository: Rangi42/polishedcrystal
           path: .
-          ref: 9bit
+          ref: ${{ github.event.inputs.commit }}
 
       - id: build-polisheddebug
         name: "Build polisheddebug"
@@ -180,14 +167,12 @@ jobs:
     name: "Build polisheddebug-faithful"
     runs-on: ubuntu-latest
     steps:
-      # INSTALL DEPENDENCIES
       - id: apt-get-depends
         name: "Install build dependencies"
         run: |
           sudo apt-get update
           sudo apt-get install bison gcc git make libpng-dev -y;
 
-      # CHECKOUT RGBDS
       - id: checkout-rgbds
         name: "Checkout gbdev/rgbds"
         uses: actions/checkout@v4
@@ -196,21 +181,19 @@ jobs:
           ref: ${{ env.RGBDS_VERSION }}
           repository: gbdev/rgbds
 
-      # INSTALL RGBDS
       - id: install-rgbds
         name: "Install gbdev/rgbds"
         working-directory: rgbds
         run: |
           sudo make install
 
-      # CHECKOUT REPOSITORY
       - id: checkout-polishedcrystal
         name: "Checkout Rangi42/polishedcrystal"
         uses: actions/checkout@v4
         with:
           repository: Rangi42/polishedcrystal
           path: .
-          ref: 9bit
+          ref: ${{ github.event.inputs.commit }}
 
       - id: build-polisheddebug-faithful
         name: "Build polisheddebug-faithful"
@@ -234,14 +217,12 @@ jobs:
     name: "Build polishedcrystal-bsp"
     runs-on: ubuntu-latest
     steps:
-      # INSTALL DEPENDENCIES
       - id: apt-get-depends
         name: "Install build dependencies"
         run: |
           sudo apt-get update
           sudo apt-get install bison gcc git make libpng-dev -y;
 
-      # CHECKOUT RGBDS
       - id: checkout-rgbds
         name: "Checkout gbdev/rgbds"
         uses: actions/checkout@v4
@@ -250,21 +231,19 @@ jobs:
           ref: ${{ env.RGBDS_VERSION }}
           repository: gbdev/rgbds
 
-      # INSTALL RGBDS
       - id: install-rgbds
         name: "Install gbdev/rgbds"
         working-directory: rgbds
         run: |
           sudo make install
 
-      # CHECKOUT REPOSITORY
       - id: checkout-polishedcrystal
         name: "Checkout Rangi42/polishedcrystal"
         uses: actions/checkout@v4
         with:
           repository: Rangi42/polishedcrystal
           path: .
-          ref: 9bit
+          ref: ${{ github.event.inputs.commit }}
 
       - id: build-polishedcrystal-bsp
         name: "Build polishedcrystal-savepatch"
