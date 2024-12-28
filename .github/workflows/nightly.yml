@@ -35,11 +35,13 @@ jobs:
     outputs: 
       should_compile: ${{ steps.check-if-should-compile.outputs.should_compile }}
       short_sha: ${{ steps.set-sha.outputs.short_sha }}
+      commit_message: ${{ steps.set-sha.outputs.commit_message }}
     steps:
       - id: set-sha
         name: "Get latest Rangi42 short commit SHA"
         run: |
           echo "short_sha=$(curl -s https://api.github.com/repos/Rangi42/polishedcrystal/commits/9bit | jq -r '.sha' | cut -c1-8)" >> $GITHUB_OUTPUT
+          echo "commit_message=$(curl -s https://api.github.com/repos/Rangi42/polishedcrystal/commits/9bit | jq -r '.commit.message')" >> $GITHUB_OUTPUT
 
       - name: "Checkout repository"
         uses: actions/checkout@v4
@@ -133,5 +135,5 @@ jobs:
           removeArtifacts: true
           prerelease: false
           body: |
-            compile from commit: https://github.com/Rangi42/polishedcrystal/commit/${{ needs.check-build.outputs.short_sha }}
+            compile from commit: https://github.com/Rangi42/polishedcrystal/commit/${{ needs.check-build.outputs.short_sha }} | ${{ needs.check-build.outputs.commit_message }}
             ${{ env.NIGHTLY_BODY }}
