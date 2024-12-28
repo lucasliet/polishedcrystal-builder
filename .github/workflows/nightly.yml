@@ -28,6 +28,9 @@ env:
 
     The **polisheddebug** assets are ROMs and symbol files with extra features to help debug the game. Do ***not*** download these to just play with; use them to help the developers diagnose and fix bugs, or create new features.
 
+permissions:
+  contents: write
+
 jobs:
   check-build:
     name: "Check Build"
@@ -50,11 +53,11 @@ jobs:
         name: "Check if should compile"
         run: |
           tag="${{ env.NIGHTLY_TAG }}-${{ steps.set-sha.outputs.short_sha }}"
-          previous_tags=$(curl -s https://api.github.com/repos/lucasliet/polishedcrystal-builder/tags | jq -r '.[].name')
-          if echo "$previous_tags" | grep -q "$tag"; then
+          previous_releases=$(curl -s https://api.github.com/repos/lucasliet/polishedcrystal-builder/releases | jq -r '.[].name')
+          if echo "$previous_releases" | grep -q "$tag"; then
             echo "Compile is unecessary, latest commit already compiled $tag"
           else
-            echo "tag $tag is not in previous_tags, proceeding..."
+            echo "tag $tag is not in previous_releases, proceeding..."
             echo "should_compile=true" >> $GITHUB_OUTPUT
           fi
 
@@ -131,7 +134,7 @@ jobs:
         with:
           artifacts: "./build/*"
           tag: ${{ env.NIGHTLY_TAG }}-${{ needs.check-build.outputs.short_sha }}
-          token: ${{ secrets.GH_RELEASE_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           removeArtifacts: true
           prerelease: false
           body: |
