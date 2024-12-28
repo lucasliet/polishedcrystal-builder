@@ -3,25 +3,18 @@ name: "CI Build"
 
 on:
   workflow_call:
+    inputs:
+      commit:
+        description: "Commit SHA to build"
+        type: string
+        required: true
 
 env:
   RGBDS_VERSION: "v0.9.0"
 
 jobs:
-  get-sha:
-    name: "Get latest Rangi42 short commit SHA"
-    runs-on: ubuntu-latest
-    outputs:
-      short_sha: ${{ steps.set-sha.outputs.short_sha }}
-    steps:
-      - id: set-sha
-        name: "Output Rangi42 short commit SHA"
-        run: |
-          echo "short_sha=$(curl -s https://api.github.com/repos/Rangi42/polishedcrystal/commits/9bit | jq -r '.sha' | cut -c1-8)" >> $GITHUB_OUTPUT
-
   build-polishedcrystal:
     name: "Build polishedcrystal"
-    needs: get-sha
     runs-on: ubuntu-latest
     steps:
       # INSTALL DEPENDENCIES
@@ -61,9 +54,9 @@ jobs:
         run: |
           make -j$(nproc) vc
           mkdir build
-          mv polishedcrystal-3.0.0-beta.gbc build/polishedcrystal-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.gbc
-          mv polishedcrystal-3.0.0-beta.patch build/polishedcrystal-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.patch
-          mv polishedcrystal-3.0.0-beta.sym build/polishedcrystal-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.sym
+          mv polishedcrystal-3.0.0-beta.gbc build/polishedcrystal-3.0.0-beta-${{ github.event.inputs.commit }}.gbc
+          mv polishedcrystal-3.0.0-beta.patch build/polishedcrystal-3.0.0-beta-${{ github.event.inputs.commit }}.patch
+          mv polishedcrystal-3.0.0-beta.sym build/polishedcrystal-3.0.0-beta-${{ github.event.inputs.commit }}.sym
       
       - id: upload-polishedcrystal
         name: "Upload polishedcrystal artifacts"
@@ -72,11 +65,10 @@ jobs:
           name: "polishedcrystal"
           retention-days: 1
           path: |
-            build/polishedcrystal-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.*
+            build/polishedcrystal-3.0.0-beta-${{ github.event.inputs.commit }}.*
       
   build-polishedcrystal-faithful:
     name: "Build polishedcrystal-faithful"
-    needs: get-sha
     runs-on: ubuntu-latest
     steps:
       # INSTALL DEPENDENCIES
@@ -116,9 +108,9 @@ jobs:
         run: |
           make -j$(nproc) faithful vc
           mkdir build
-          mv polishedcrystal-faithful-3.0.0-beta.gbc build/polishedcrystal-faithful-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.gbc
-          mv polishedcrystal-faithful-3.0.0-beta.patch build/polishedcrystal-faithful-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.patch
-          mv polishedcrystal-faithful-3.0.0-beta.sym build/polishedcrystal-faithful-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.sym
+          mv polishedcrystal-faithful-3.0.0-beta.gbc build/polishedcrystal-faithful-3.0.0-beta-${{ github.event.inputs.commit }}.gbc
+          mv polishedcrystal-faithful-3.0.0-beta.patch build/polishedcrystal-faithful-3.0.0-beta-${{ github.event.inputs.commit }}.patch
+          mv polishedcrystal-faithful-3.0.0-beta.sym build/polishedcrystal-faithful-3.0.0-beta-${{ github.event.inputs.commit }}.sym
 
       - id: upload-polishedcrystal-faithful
         name: "Upload polishedcrystal-faithful artifacts"
@@ -127,11 +119,10 @@ jobs:
           name: "polishedcrystal-faithful"
           retention-days: 1
           path: |
-            build/polishedcrystal-faithful-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.*
+            build/polishedcrystal-faithful-3.0.0-beta-${{ github.event.inputs.commit }}.*
   
   build-polisheddebug:
     name: "Build polisheddebug"
-    needs: get-sha
     runs-on: ubuntu-latest
     steps:
       # INSTALL DEPENDENCIES
@@ -171,9 +162,9 @@ jobs:
         run: |
           make -j$(nproc) debug vc
           mkdir build
-          mv polishedcrystal-debug-3.0.0-beta.gbc build/polisheddebug-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.gbc
-          mv polishedcrystal-debug-3.0.0-beta.patch build/polisheddebug-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.patch
-          mv polishedcrystal-debug-3.0.0-beta.sym build/polisheddebug-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.sym
+          mv polishedcrystal-debug-3.0.0-beta.gbc build/polisheddebug-3.0.0-beta-${{ github.event.inputs.commit }}.gbc
+          mv polishedcrystal-debug-3.0.0-beta.patch build/polisheddebug-3.0.0-beta-${{ github.event.inputs.commit }}.patch
+          mv polishedcrystal-debug-3.0.0-beta.sym build/polisheddebug-3.0.0-beta-${{ github.event.inputs.commit }}.sym
       
       - id: upload-polisheddebug
         name: "Upload polisheddebug artifacts"
@@ -182,12 +173,11 @@ jobs:
           name: "polisheddebug"
           retention-days: 1
           path: |
-            build/polisheddebug-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.*
+            build/polisheddebug-3.0.0-beta-${{ github.event.inputs.commit }}.*
 
       
   build-polisheddebug-faithful:
     name: "Build polisheddebug-faithful"
-    needs: get-sha
     runs-on: ubuntu-latest
     steps:
       # INSTALL DEPENDENCIES
@@ -227,9 +217,9 @@ jobs:
         run: |
           make -j$(nproc) faithful debug vc
           mkdir build
-          mv polishedcrystal-faithful-debug-3.0.0-beta.gbc build/polisheddebug-faithful-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.gbc
-          mv polishedcrystal-faithful-debug-3.0.0-beta.patch build/polisheddebug-faithful-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.patch
-          mv polishedcrystal-faithful-debug-3.0.0-beta.sym build/polisheddebug-faithful-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.sym
+          mv polishedcrystal-faithful-debug-3.0.0-beta.gbc build/polisheddebug-faithful-3.0.0-beta-${{ github.event.inputs.commit }}.gbc
+          mv polishedcrystal-faithful-debug-3.0.0-beta.patch build/polisheddebug-faithful-3.0.0-beta-${{ github.event.inputs.commit }}.patch
+          mv polishedcrystal-faithful-debug-3.0.0-beta.sym build/polisheddebug-faithful-3.0.0-beta-${{ github.event.inputs.commit }}.sym
       
       - id: upload-polisheddebug-faithful
         name: "Upload polisheddebug-faithful artifacts"
@@ -238,11 +228,10 @@ jobs:
           name: "polisheddebug-faithful"
           retention-days: 1
           path: |
-            build/polisheddebug-faithful-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.*
+            build/polisheddebug-faithful-3.0.0-beta-${{ github.event.inputs.commit }}.*
       
   build-polishedcrystal-bsp:
     name: "Build polishedcrystal-bsp"
-    needs: get-sha
     runs-on: ubuntu-latest
     steps:
       # INSTALL DEPENDENCIES
@@ -282,7 +271,7 @@ jobs:
         run: |
           make -j$(nproc) bsp
           mkdir build
-          mv polishedcrystal-3.0.0-beta.bsp build/polishedcrystal-savepatch-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.bsp
+          mv polishedcrystal-3.0.0-beta.bsp build/polishedcrystal-savepatch-3.0.0-beta-${{ github.event.inputs.commit }}.bsp
 
       - id: upload-polishedcrystal-savepatch
         name: "Upload polishedcrystal savepatch"
@@ -291,4 +280,4 @@ jobs:
           name: "polishedcrystal-savepatch"
           retention-days: 1
           path: |
-            build/polishedcrystal-savepatch-3.0.0-beta-${{ needs.get-sha.outputs.short_sha }}.*
+            build/polishedcrystal-savepatch-3.0.0-beta-${{ github.event.inputs.commit }}.*
