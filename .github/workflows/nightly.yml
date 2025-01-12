@@ -50,12 +50,11 @@ jobs:
           if [ -z "${{ inputs.commit }}" ]; then
             commits=$(curl -s https://api.github.com/repos/Rangi42/polishedcrystal/commits/9bit)
             echo "short_sha=$(echo $commits | jq -r '.sha' | cut -c1-8)" >> $GITHUB_OUTPUT
-            echo "commit_message=$(echo $commits | jq -r '.commit.message')" >> $GITHUB_OUTPUT
           else
             commits=$(curl -s https://api.github.com/repos/Rangi42/polishedcrystal/commits/${{ inputs.commit }})
             echo "short_sha=$(echo $commits | jq -r '.sha' | cut -c1-8)" >> $GITHUB_OUTPUT
-            echo "commit_message=$(echo $commits | jq -r '.commit.message')" >> $GITHUB_OUTPUT
           fi
+            echo "commit_message=$(echo $commits | jq -r '.commit.message' | head -n 1)" >> $GITHUB_OUTPUT
 
       - name: "Checkout repository"
         uses: actions/checkout@v4
