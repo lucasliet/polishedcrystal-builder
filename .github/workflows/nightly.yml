@@ -23,17 +23,17 @@ env:
   NIGHTLY_TAG: "v3.0.0-9bit-beta"
   NIGHTLY_NAME: "3.0.0-9bit-beta"
   NIGHTLY_BODY: |
-    This is the current Polished Crystal 3.0.0 9bit *beta* release. The assets all have an 8-character "commit hash" at the end to identify the exact code they're built from.
+    <p>This is the current Polished Crystal 3.0.0 9bit <i>beta</i> release. The assets all have an 8-character "commit hash" at the end to identify the exact code they're built from.</p>
 
-    The **.gbc** assets are ROMs. If you just want to play the game, download one (regular, `-faithful` which omits some non-canon changes, or `noir` which is in grayscale) and load it in [BGB](https://bgb.bircd.org/), [mGBA](https://mgba.io/), [Gambatte](https://github.com/sinamas/gambatte), or another accurate Game Boy Color emulator. (***Do not use VBA*** or VBA-M.) If your emulator or flashcart has issues with supporting a real time clock (or you desire it disabled for any other reason), download your preferred version with the `-nortc` flag.
+    <p>The <b>.gbc</b> assets are ROMs. If you just want to play the game, download one (regular, <code>-faithful</code> which omits some non-canon changes, or <code>noir</code> which is in grayscale) and load it in <a href="https://bgb.bircd.org/">BGB</a>, <a href="https://mgba.io/">mGBA</a>, <a href="https://github.com/sinamas/gambatte">Gambatte</a>, or another accurate Game Boy Color emulator. (<i><b>Do not use VBA</i></b> or VBA-M.) If your emulator or flashcart has issues with supporting a real time clock (or you desire it disabled for any other reason), download your preferred version with the <code>-nortc</code> flag.</p>
 
-    The **.sym** assets are "symbol files". They're useful for debugging, or for [discovering cheat codes](https://github.com/pret/pokecrystal/wiki/Discovering-GameShark-cheat-codes), although cheats are *not* officially supported and may cause bugs or crashes. (Do ***not*** ask the developers for cheat codes.)
+    <p>The <b>.sym</b> assets are "symbol files". They're useful for debugging, or for <a href="https://github.com/pret/pokecrystal/wiki/Discovering-GameShark-cheat-codes">discovering cheat codes</a>, although cheats are *not* officially supported and may cause bugs or crashes. (Do <i><b>not</b></i> ask the developers for cheat codes.)</p>
 
-    The **.patch** assets are 3DS Virtual Console patches to enable trading and battling over Wi-Fi. You can bundle the .gbc and corresponding .patch into a playable .cia file using [poke-cia](https://github.com/vulcandth/poke-cia).
+    <p>The <b>.patch</b> assets are 3DS Virtual Console patches to enable trading and battling over Wi-Fi. You can bundle the .gbc and corresponding .patch into a playable .cia file using <a href="https://github.com/vulcandth/poke-cia">poke-cia</a>.</p>
 
-    The **.bsp** asset is a [BSP](https://github.com/aaaaaa123456789/bsp) save file patch in case you need to upgrade a save file from an older 3.0.0 beta build, using a patcher like the one for [Pokémon Prism](http://pokemonprism.com/patcher.html).
+    <p>The <b>.bsp</b> asset is a <a href="https://github.com/aaaaaa123456789/bsp">BSP</a> save file patch in case you need to upgrade a save file from an older 3.0.0 beta build, using a patcher like the one for <a href="http://pokemonprism.com/patcher.html">Pokémon Prism</a>.</p>
 
-    The **polisheddebug** assets are ROMs and symbol files with extra features to help debug the game. Do ***not*** download these to just play with; use them to help the developers diagnose and fix bugs, or create new features.
+    <p>The <b>polisheddebug</b> assets are ROMs and symbol files with extra features to help debug the game. Do <i><b>not</b></i> download these to just play with; use them to help the developers diagnose and fix bugs, or create new features.</p>
 
 jobs:
   check-build:
@@ -147,5 +147,5 @@ jobs:
           removeArtifacts: true
           prerelease: ${{ inputs.commit != '' }}
           body: |
-            compile from commit: https://github.com/Rangi42/polishedcrystal/commit/${{ needs.check-build.outputs.short_sha }}: ${{ needs.check-build.outputs.commit_message }}
+            compile from commit: <a href="https://github.com/Rangi42/polishedcrystal/commit/${{ needs.check-build.outputs.short_sha }}">https://github.com/Rangi42/polishedcrystal/commit/${{ needs.check-build.outputs.short_sha }}: ${{ needs.check-build.outputs.commit_message }}</a>
             ${{ env.NIGHTLY_BODY }}
