@@ -99,6 +99,7 @@ function displayPreviousReleases(releases) {
   const previousReleasesSection = document.querySelector('#previous-releases');
   if (releases.length > 0) {
     previousReleasesSection.innerHTML = releases
+      .sort((a, b) => new Date(b.published_at) - new Date(a.published_at))
       .map(release => createReleaseCard(release))
       .join('');
     setupAccordions();
