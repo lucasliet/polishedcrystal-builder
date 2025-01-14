@@ -1,4 +1,6 @@
 # Polished Crystal 9bit auto builder
+[![Create Release](https://github.com/lucasliet/polishedcrystal-builder/actions/workflows/nightly.yml/badge.svg)](https://github.com/lucasliet/polishedcrystal-builder/actions/workflows/nightly.yml)
+[![Pages Deployment](https://github.com/lucasliet/polishedcrystal-builder/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/lucasliet/polishedcrystal-builder/actions/workflows/pages/pages-build-deployment)
 
 polishedcrystal is a project of [@Rangi42](https://github.com/Rangi42)
 
