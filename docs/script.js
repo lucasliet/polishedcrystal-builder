@@ -1,4 +1,5 @@
-const API_URL = 'https://api.github.com/repos/lucasliet/polishedcrystal-builder/releases';
+const RELEASES_URL = 'https://api.github.com/repos/lucasliet/polishedcrystal-builder/releases';
+const LATEST_RELEASE_URL = `${RELEASES_URL}/latest`;
 
 function getCachedData() {
   const lastFetch = JSON.parse(sessionStorage.getItem('lastFetch') || '{}');
@@ -16,8 +17,16 @@ async function fetchReleases() {
     return cachedData;
   }
 
-  const response = await fetch(API_URL);
-  const releases = await response.json();
+  const latestRelease = 
+    await fetch(LATEST_RELEASE_URL)
+      .then(response => response.json());
+  
+  const previousReleases = 
+    await fetch(RELEASES_URL)
+      .then(response => response.json())
+      .then(releases => releases.filter(release => release.id !== latestRelease.id));
+
+  const releases = [latestRelease, ...previousReleases];
 
   sessionStorage.setItem('lastFetch', JSON.stringify({ time: Date.now(), data: releases }));
   return releases;
