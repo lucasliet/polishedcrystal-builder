@@ -15,6 +15,10 @@
   box-sizing: border-box;
 }
 
+a {
+  text-decoration: none;
+}
+
 body {
   font-family: 'Roboto', system-ui, sans-serif;
   background-color: var(--background);
@@ -62,7 +66,6 @@ footer span {
 
 footer a, .credits {
   color: var(--accent);
-  text-decoration: none;
   padding: 0.2rem 0.5rem;
   border-radius: var(--border-radius);
   transition: all 0.2s ease;
@@ -200,7 +203,6 @@ code {
   min-height: 4rem;
   background-color: var(--accent);
   color: var(--card-bg);
-  text-decoration: none;
   border-radius: var(--border-radius);
   transition: background-color, transform 0.2s ease;
 }
@@ -210,10 +212,13 @@ code {
   transform: scale(1.02);
 }
 
-.loading {
+.loading, .error {
   text-align: center;
   color: var(--secondary);
   padding: 2rem;
+}
+
+.loading {
   animation: pulse 0.5s infinite;
 }
 

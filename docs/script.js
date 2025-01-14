@@ -41,7 +41,7 @@ async function initializeReleaseDisplay() {
     }
   } catch (error) {
     console.error('Erro ao buscar releases:', error);
-    document.querySelector('#latest-release').innerHTML = '<p class="error">Erro on loading releases</p>';
+    document.querySelector('#latest-release').innerHTML = '<p class="error">Error on loading releases</p>';
   }
 }
 
@@ -72,7 +72,7 @@ function createReleaseCard(release, isLatest = false) {
   return `
         <article class="release-card ${isLatest ? 'latest' : 'collapsed'}">
             <div class="release-header">
-                <h3 class="release-title">${release.name || release.tag_name}</h3>
+                <a href="${release.html_url}"><h3 class="release-title">${release.name || release.tag_name}</h3></a>
                 <span class="release-date">Released at ${formatDate(release.published_at)}</span>
             </div>
             <div class="release-content">
@@ -113,7 +113,7 @@ function displayPreviousReleases(releases) {
       .join('');
     setupAccordions();
   } else {
-    previousReleasesSection.innerHTML = '<p>No release was found.</p>';
+    previousReleasesSection.innerHTML = '<p class="error">No release was found.</p>';
   }
 }
 
