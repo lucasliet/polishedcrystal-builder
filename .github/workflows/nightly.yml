@@ -56,9 +56,6 @@ jobs:
           fi
             echo "commit_message=$(echo $commits | jq -r '.commit.message' | head -n 1)" >> $GITHUB_OUTPUT
 
-      - name: "Checkout repository"
-        uses: actions/checkout@v4
-
       - id: check-if-should-compile
         name: "Check if should compile"
         run: |
