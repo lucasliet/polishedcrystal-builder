@@ -1,0 +1,234 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+  --primary: #2d3436;
+  --secondary: #636e72;
+  --accent: #0984e3;
+  --background: #f5f6fa;
+  --card-bg: #ffffff;
+  --border-radius: 4px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  font-family: 'Roboto', system-ui, sans-serif;
+  background-color: var(--background);
+  color: var(--primary);
+  line-height: 1.6;
+}
+
+main {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+header {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+header > span {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+footer {
+  display: flex;
+  justify-content: flex-end;
+  max-width: 1200px;
+  margin: 4rem auto 2rem;
+  padding: 1rem;
+  text-align: center;
+  color: var(--secondary);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+footer span {
+  font-size: 0.9rem;
+}
+
+footer a, .credits {
+  color: var(--accent);
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--border-radius);
+  transition: all 0.2s ease;
+}
+
+footer a:hover, .credits:hover {
+  background-color: var(--accent);
+  color: var(--card-bg);
+}
+
+h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  background: linear-gradient(45deg, var(--primary), var(--accent));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+h2 {
+  margin: 2rem 0 1rem;
+  color: var(--secondary);
+}
+
+hr {
+  border: 1px solid var(--secondary);
+}
+
+code {
+  background-color: var(--background);
+  padding: 0.2em 0.4em;
+  border-radius: var(--border-radius);
+  font-family: monospace;
+  font-size: 0.9em;
+}
+
+.credits {
+  color: var(--secondary);
+  border: 1px solid var(--secondary);
+}
+
+.release-card {
+  background: var(--card-bg);
+  border-radius: calc(var(--border-radius) * 4);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.release-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.release-card.latest {
+  border: 2px solid var(--accent);
+  background: linear-gradient(to right bottom, var(--card-bg), var(--background));
+}
+
+.release-card.collapsed .release-content {
+  display: none;
+}
+
+.release-card .release-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.release-card .release-header::after {
+  content: '▼';
+  font-size: 0.8rem;
+  transition: transform 0.3s ease;
+}
+
+.release-card.collapsed .release-header::after {
+  transform: rotate(-90deg);
+}
+
+.release-card .release-content {
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.release-title {
+  font-size: 1.25rem;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.release-date {
+  color: var(--secondary);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.release-body {
+  margin: 1rem 0;
+  color: var(--primary);
+}
+
+.release-body b {
+  font-weight: 600;
+}
+
+.release-body i {
+  font-style: italic;
+}
+
+.download-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.download-link {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  min-height: 4rem;
+  background-color: var(--accent);
+  color: var(--card-bg);
+  border-radius: var(--border-radius);
+  transition: background-color, transform 0.2s ease;
+}
+
+.download-link:hover {
+  background-color: #0773c5;
+  transform: scale(1.02);
+}
+
+.loading, .error {
+  text-align: center;
+  color: var(--secondary);
+  padding: 2rem;
+}
+
+.loading {
+  animation: pulse 0.5s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+@media (max-width: 768px) {
+  h1 { font-size: 2rem; }
+  .release-card { padding: 1rem; }
+}
