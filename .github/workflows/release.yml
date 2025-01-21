@@ -2,11 +2,9 @@ name: "Create Release"
 
 on:
   pull_request:
-    branches:
-      - main
+    branches: [main]
   push:
-    branches:
-      - main
+    branches: [main]
   schedule:
      - cron: '0 7 * * *'
   workflow_dispatch:
@@ -19,6 +17,9 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: ${{ github.workflow }}-${{ inputs.commit }}
+
 env:
   NIGHTLY_TAG: "v3.0.0-9bit-beta"
   NIGHTLY_NAME: "3.0.0-9bit-beta"
@@ -27,7 +28,7 @@ env:
 
     <p>The <b>.gbc</b> assets are ROMs. If you just want to play the game, download one (regular, <code>-faithful</code> which omits some non-canon changes, or <code>noir</code> which is in grayscale) and load it in <a href="https://bgb.bircd.org/">BGB</a>, <a href="https://mgba.io/">mGBA</a>, <a href="https://github.com/sinamas/gambatte">Gambatte</a>, or another accurate Game Boy Color emulator. (<i><b>Do not use VBA</i></b> or VBA-M.) If your emulator or flashcart has issues with supporting a real time clock (or you desire it disabled for any other reason), download your preferred version with the <code>-nortc</code> flag.</p>
 
-    <p>The <b>.sym</b> assets are "symbol files". They're useful for debugging, or for <a href="https://github.com/pret/pokecrystal/wiki/Discovering-GameShark-cheat-codes">discovering cheat codes</a>, although cheats are *not* officially supported and may cause bugs or crashes. (Do <i><b>not</b></i> ask the developers for cheat codes.)</p>
+    <p>The <b>.sym</b> assets are "symbol files". They're useful for debugging, or for <a href="https://github.com/pret/pokecrystal/wiki/Discovering-GameShark-cheat-codes">discovering cheat codes</a>, although cheats are <i><b>not</b></i> officially supported and may cause bugs or crashes. (Do <i><b>not</b></i> ask the developers for cheat codes.)</p>
 
     <p>The <b>.patch</b> assets are 3DS Virtual Console patches to enable trading and battling over Wi-Fi. You can bundle the .gbc and corresponding .patch into a playable .cia file using <a href="https://github.com/vulcandth/poke-cia">poke-cia</a>.</p>
 
@@ -37,7 +38,7 @@ env:
 
 jobs:
   check-build:
-    name: "Check Build"
+    name: "Check new build to compile"
     runs-on: ubuntu-latest
     outputs: 
       should_compile: ${{ steps.check-if-should-compile.outputs.should_compile }}
@@ -141,7 +142,6 @@ jobs:
           artifacts: "./build/*"
           tag: ${{ env.NIGHTLY_TAG }}-${{ needs.check-build.outputs.short_sha }}
           token: ${{ secrets.GITHUB_TOKEN }}
-          removeArtifacts: true
           prerelease: ${{ inputs.commit != '' }}
           body: |
             compile from commit: <a href="https://github.com/Rangi42/polishedcrystal/commit/${{ needs.check-build.outputs.short_sha }}">https://github.com/Rangi42/polishedcrystal/commit/${{ needs.check-build.outputs.short_sha }}: ${{ needs.check-build.outputs.commit_message }}</a>

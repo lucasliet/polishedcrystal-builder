@@ -1,0 +1,64 @@
+name: "Clean Releases and Tags"
+
+on:
+  workflow_dispatch:
+  release:
+    types: [deleted, published]
+
+permissions:
+  contents: write
+
+env:
+  MAX_RELEASES: 4
+
+jobs:
+  remove-old-release:
+    name: Remove orphan tags and old releases
+    runs-on: ubuntu-latest
+    steps:
+      - name: Remove old releases
+        if: github.event_name == 'workflow_dispatch' || github.event_name == 'release' && github.event.action == 'published'
+        run: |
+            releases=$(curl -s https://api.github.com/repos/lucasliet/polishedcrystal-builder/releases)
+            release_count=$(echo $releases | jq length)
+
+            if [ $release_count -gt ${{ env.MAX_RELEASES }} ]; then
+              releases_to_delete=$(echo $releases | jq -r 'sort_by(.published_at) | reverse | .[${{ env.MAX_RELEASES }}:][].id')
+              for release_id in $releases_to_delete; do
+                release_tag=$(echo $releases | jq -r ".[] | select(.id==$release_id) | .tag_name")
+                echo "Removing old release $release_tag"
+                curl -X DELETE \
+                  -H "Accept: application/vnd.github.v3+json" \
+                  -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                  https://api.github.com/repos/lucasliet/polishedcrystal-builder/releases/$release_id
+                
+                echo "Removing old tag $release_tag"
+                curl -X DELETE \
+                  -H "Accept: application/vnd.github.v3+json" \
+                  -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                  https://api.github.com/repos/lucasliet/polishedcrystal-builder/git/refs/tags/$release_tag
+              done
+            else
+              echo "Total releases is less than or equal to 10 releases, skipping deletion"
+            fi
+
+      - name: Remove orphan tags
+        if: github.event_name == 'workflow_dispatch' || github.event_name == 'release' && github.event.action == 'deleted'
+        run: |
+            releases=$(curl -s https://api.github.com/repos/lucasliet/polishedcrystal-builder/releases)
+            if [ -z "$releases" ]; then
+              echo "Error, no releases found"
+              exit 1
+            fi
+            tags=$(curl -s https://api.github.com/repos/lucasliet/polishedcrystal-builder/git/refs/tags)
+            
+            for tag in $(echo $tags | jq -r '.[].ref'); do
+              tag_name=$(echo $tag | cut -d/ -f3)
+              if ! echo "$releases" | grep -q "$tag_name"; then
+                echo "Removing orphan tag $tag_name"
+                curl -X DELETE \
+                  -H "Accept: application/vnd.github.v3+json" \
+                  -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                  https://api.github.com/repos/lucasliet/polishedcrystal-builder/git/refs/tags/$tag_name
+              fi
+            done
