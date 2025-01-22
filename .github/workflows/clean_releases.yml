@@ -2,6 +2,7 @@ name: "Clean Releases and Tags"
 
 on:
   workflow_dispatch:
+  workflow_call:
   release:
     types: [deleted, published]
 
@@ -17,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Remove old releases
-        if: github.event_name == 'workflow_dispatch' || github.event_name == 'release' && github.event.action == 'published'
+        if: contains(fromJSON('["workflow_dispatch", "push", "schedule"]'), github.event_name) || github.event_name == 'release' && github.event.action == 'published'
         run: |
             releases=$(curl -s https://api.github.com/repos/lucasliet/polishedcrystal-builder/releases)
             release_count=$(echo $releases | jq length)
@@ -39,7 +40,7 @@ jobs:
                   https://api.github.com/repos/lucasliet/polishedcrystal-builder/git/refs/tags/$release_tag
               done
             else
-              echo "Total releases is less than or equal to 10 releases, skipping deletion"
+              echo "Total releases is less than or equal to ${{ env.MAX_RELEASES }} releases, skipping deletion"
             fi
 
       - name: Remove orphan tags

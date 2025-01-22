@@ -77,6 +77,12 @@ jobs:
     with:
       commit: "${{ needs.check-build.outputs.short_sha }}"
 
+  clean_releases:
+    name: "Clean old releases"
+    needs: check-build
+    if: ${{ needs.check-build.outputs.should_compile }}
+    uses: lucasliet/polishedcrystal-builder/.github/workflows/clean_releases.yml@main
+
   update_release:
     name: "Update last release to pre-release"
     runs-on: ubuntu-latest
