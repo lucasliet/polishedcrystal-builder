@@ -123,7 +123,6 @@ code {
 
 .release-card.latest {
   border: 2px solid var(--accent);
-  background: linear-gradient(to right bottom, var(--card-bg), var(--background));
 }
 
 .release-card.collapsed .release-content {
