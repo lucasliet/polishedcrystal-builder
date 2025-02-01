@@ -5,8 +5,8 @@ on:
     branches: [main]
   push:
     branches: [main]
-  schedule:
-     - cron: '0 7 * * *'
+  # schedule:
+  #    - cron: '0 7 * * *'
   workflow_dispatch:
     inputs:
       commit:
@@ -21,10 +21,10 @@ concurrency:
   group: ${{ github.workflow }}-${{ inputs.commit }}
 
 env:
-  NIGHTLY_TAG: "v3.0.0-9bit-beta"
-  NIGHTLY_NAME: "3.0.0-9bit-beta"
+  NIGHTLY_TAG: "v3.2.0-beta"
+  NIGHTLY_NAME: "3.2.0-beta"
   NIGHTLY_BODY: |
-    <p>This is the current Polished Crystal 3.0.0 9bit <i>beta</i> release. The assets all have an 8-character "commit hash" at the end to identify the exact code they're built from.</p>
+    <p>This is the current Polished Crystal 3.2.0 <i>beta</i> release. The assets all have an 8-character "commit hash" at the end to identify the exact code they're built from.</p>
 
     <p>The <b>.gbc</b> assets are ROMs. If you just want to play the game, download one (regular, <code>-faithful</code> which omits some non-canon changes, or <code>noir</code> which is in grayscale) and load it in <a href="https://bgb.bircd.org/">BGB</a>, <a href="https://mgba.io/">mGBA</a>, <a href="https://github.com/sinamas/gambatte">Gambatte</a>, or another accurate Game Boy Color emulator. (<i><b>Do not use VBA</i></b> or VBA-M.) If your emulator or flashcart has issues with supporting a real time clock (or you desire it disabled for any other reason), download your preferred version with the <code>-nortc</code> flag.</p>
 
@@ -32,7 +32,7 @@ env:
 
     <p>The <b>.patch</b> assets are 3DS Virtual Console patches to enable trading and battling over Wi-Fi. You can bundle the .gbc and corresponding .patch into a playable .cia file using <a href="https://github.com/vulcandth/poke-cia">poke-cia</a>.</p>
 
-    <p>The <b>.bsp</b> asset is a <a href="https://github.com/aaaaaa123456789/bsp">BSP</a> save file patch in case you need to upgrade a save file from an older 3.0.0 beta build, using a patcher like the one for <a href="http://pokemonprism.com/patcher.html">Pokémon Prism</a>.</p>
+    <p>The <b>.bsp</b> asset is a <a href="https://github.com/aaaaaa123456789/bsp">BSP</a> save file patch in case you need to upgrade a save file from an older 3.1.0 beta build, using a patcher like the one for <a href="http://pokemonprism.com/patcher.html">Pokémon Prism</a>.</p>
 
     <p>The <b>polisheddebug</b> assets are ROMs and symbol files with extra features to help debug the game. Do <i><b>not</b></i> download these to just play with; use them to help the developers diagnose and fix bugs, or create new features.</p>
 
@@ -45,18 +45,25 @@ jobs:
       short_sha: ${{ steps.set-sha.outputs.short_sha }}
       commit_message: ${{ steps.set-sha.outputs.commit_message }}
     steps:
+      - id: lastofficialcommit
+        if: ${{ inputs.commit == '' }}
+        uses: nmbgeek/github-action-get-latest-commit@main
+        with:
+          owner: Rangi42
+          repo: polishedcrystal
+          branch: master
+
       - id: set-sha
         name: "Get latest Rangi42 short commit SHA"
         run: |
           if [ -z "${{ inputs.commit }}" ]; then
-            commits=$(curl -s https://api.github.com/repos/Rangi42/polishedcrystal/commits/9bit)
-            echo "short_sha=$(echo $commits | jq -r '.sha' | cut -c1-8)" >> $GITHUB_OUTPUT
+            echo "short_sha=${{ steps.lastofficialcommit.outputs.shorthash }}" >> $GITHUB_OUTPUT
+            echo "commit_message=$(echo ${{ steps.lastofficialcommit.outputs.description }} | head -n 1)" >> $GITHUB_OUTPUT
           else
             commits=$(curl -s https://api.github.com/repos/Rangi42/polishedcrystal/commits/${{ inputs.commit }})
             echo "short_sha=$(echo $commits | jq -r '.sha' | cut -c1-8)" >> $GITHUB_OUTPUT
-          fi
             echo "commit_message=$(echo $commits | jq -r '.commit.message' | head -n 1)" >> $GITHUB_OUTPUT
-
+          fi
       - id: check-if-should-compile
         name: "Check if should compile"
         run: |
@@ -77,33 +84,33 @@ jobs:
     with:
       commit: "${{ needs.check-build.outputs.short_sha }}"
 
-  clean_releases:
-    name: "Clean old releases"
-    needs: check-build
-    if: ${{ needs.check-build.outputs.should_compile }}
-    uses: lucasliet/polishedcrystal-builder/.github/workflows/clean_releases.yml@main
+  # clean_releases:
+  #   name: "Clean old releases"
+  #   needs: check-build
+  #   if: ${{ needs.check-build.outputs.should_compile }}
+  #   uses: lucasliet/polishedcrystal-builder/.github/workflows/clean_releases.yml@main
 
-  update_release:
-    name: "Update last release to pre-release"
-    runs-on: ubuntu-latest
-    needs: build
-    if: ${{ inputs.commit == '' }}
-    steps:
-    - name: Get the latest release
-      id: get_release
-      run: |
-        latest_release=$(curl -s https://api.github.com/repos/lucasliet/polishedcrystal-builder/releases/latest)
-        echo "tag_name=$(echo $latest_release | jq -r '.tag_name')" >> $GITHUB_OUTPUT
-        echo "release_id=$(echo $latest_release | jq -r '.id')" >> $GITHUB_OUTPUT
+  # update_release:
+  #   name: "Update last release to pre-release"
+  #   runs-on: ubuntu-latest
+  #   needs: build
+  #   if: ${{ inputs.commit == '' }}
+  #   steps:
+  #   - name: Get the latest release
+  #     id: get_release
+  #     run: |
+  #       latest_release=$(curl -s https://api.github.com/repos/lucasliet/polishedcrystal-builder/releases/latest)
+  #       echo "tag_name=$(echo $latest_release | jq -r '.tag_name')" >> $GITHUB_OUTPUT
+  #       echo "release_id=$(echo $latest_release | jq -r '.id')" >> $GITHUB_OUTPUT
 
-    - name: Update the release to pre-release
-      run: |
-        echo "Updating release ${{ steps.get_release.outputs.tag_name }} to pre-release"
-        curl -X PATCH \
-          -H "Accept: application/vnd.github.v3+json" \
-          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-          https://api.github.com/repos/lucasliet/polishedcrystal-builder/releases/${{ steps.get_release.outputs.release_id }} \
-          -d '{"prerelease": true}'
+  #   - name: Update the release to pre-release
+  #     run: |
+  #       echo "Updating release ${{ steps.get_release.outputs.tag_name }} to pre-release"
+  #       curl -X PATCH \
+  #         -H "Accept: application/vnd.github.v3+json" \
+  #         -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+  #         https://api.github.com/repos/lucasliet/polishedcrystal-builder/releases/${{ steps.get_release.outputs.release_id }} \
+  #         -d '{"prerelease": true}'
 
   release:
     name: "Publish release"
