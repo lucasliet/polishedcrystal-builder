@@ -102,6 +102,25 @@ code {
   font-size: 0.9em;
 }
 
+.warning {
+  background-color: #fff3cd;
+  border-radius: var(--border-radius);
+  color: #856404;
+  border: 1px solid #ffeeba;
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.warning a {
+  color: #533f03;
+  text-decoration: underline;
+}
+
+.warning a:hover {
+  color: #000;
+}
+
 .credits {
   color: var(--secondary);
   border: 1px solid var(--secondary);

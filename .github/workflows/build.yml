@@ -52,9 +52,9 @@ jobs:
           git checkout ${{ inputs.commit }}
           make -j$(nproc) vc
           mkdir build
-          mv polishedcrystal-3.2.0-beta_vc.gbc build/polishedcrystal-3.2.0-beta-${{ inputs.commit }}.gbc
-          mv polishedcrystal-3.2.0-beta.patch build/polishedcrystal-3.2.0-beta-${{ inputs.commit }}.patch
-          mv polishedcrystal-3.2.0-beta_vc.sym build/polishedcrystal-3.2.0-beta-${{ inputs.commit }}.sym
+          mv polishedcrystal-3.2.0_vc.gbc build/polishedcrystal-dev-${{ inputs.commit }}.gbc
+          mv polishedcrystal-3.2.0.patch build/polishedcrystal-dev-${{ inputs.commit }}.patch
+          mv polishedcrystal-3.2.0_vc.sym build/polishedcrystal-dev-${{ inputs.commit }}.sym
       
       - id: upload-polishedcrystal
         name: "Upload polishedcrystal artifacts"
@@ -63,7 +63,7 @@ jobs:
           name: "polishedcrystal"
           retention-days: 1
           path: |
-            build/polishedcrystal-3.2.0-beta-${{ inputs.commit }}.*
+            build/polishedcrystal-dev-${{ inputs.commit }}.*
       
   build-polishedcrystal-faithful:
     name: "Build polishedcrystal-faithful"
@@ -105,9 +105,9 @@ jobs:
           git checkout ${{ inputs.commit }}
           make -j$(nproc) faithful vc
           mkdir build
-          mv polishedcrystal-faithful-3.2.0-beta_vc.gbc build/polishedcrystal-faithful-3.2.0-beta-${{ inputs.commit }}.gbc
-          mv polishedcrystal-faithful-3.2.0-beta.patch build/polishedcrystal-faithful-3.2.0-beta-${{ inputs.commit }}.patch
-          mv polishedcrystal-faithful-3.2.0-beta_vc.sym build/polishedcrystal-faithful-3.2.0-beta-${{ inputs.commit }}.sym
+          mv polishedcrystal-faithful-3.2.0_vc.gbc build/polishedcrystal-faithful-dev-${{ inputs.commit }}.gbc
+          mv polishedcrystal-faithful-3.2.0.patch build/polishedcrystal-faithful-dev-${{ inputs.commit }}.patch
+          mv polishedcrystal-faithful-3.2.0_vc.sym build/polishedcrystal-faithful-dev-${{ inputs.commit }}.sym
 
       - id: upload-polishedcrystal-faithful
         name: "Upload polishedcrystal-faithful artifacts"
@@ -116,7 +116,7 @@ jobs:
           name: "polishedcrystal-faithful"
           retention-days: 1
           path: |
-            build/polishedcrystal-faithful-3.2.0-beta-${{ inputs.commit }}.*
+            build/polishedcrystal-faithful-dev-${{ inputs.commit }}.*
   
   build-polisheddebug:
     name: "Build polisheddebug"
@@ -158,9 +158,9 @@ jobs:
           git checkout ${{ inputs.commit }}
           make -j$(nproc) debug vc
           mkdir build
-          mv polishedcrystal-debug-3.2.0-beta_vc.gbc build/polishedcrystal-debug-3.2.0-beta-${{ inputs.commit }}.gbc
-          mv polishedcrystal-debug-3.2.0-beta.patch build/polishedcrystal-debug-3.2.0-beta-${{ inputs.commit }}.patch
-          mv polishedcrystal-debug-3.2.0-beta_vc.sym build/polishedcrystal-debug-3.2.0-beta-${{ inputs.commit }}.sym
+          mv polishedcrystal-debug-3.2.0_vc.gbc build/polishedcrystal-debug-dev-${{ inputs.commit }}.gbc
+          mv polishedcrystal-debug-3.2.0.patch build/polishedcrystal-debug-dev-${{ inputs.commit }}.patch
+          mv polishedcrystal-debug-3.2.0_vc.sym build/polishedcrystal-debug-dev-${{ inputs.commit }}.sym
       
       - id: upload-polisheddebug
         name: "Upload polisheddebug artifacts"
@@ -169,7 +169,7 @@ jobs:
           name: "polisheddebug"
           retention-days: 1
           path: |
-            build/polishedcrystal-debug-3.2.0-beta-${{ inputs.commit }}.*
+            build/polishedcrystal-debug-dev-${{ inputs.commit }}.*
 
       
   build-polisheddebug-faithful:
@@ -212,9 +212,9 @@ jobs:
           git checkout ${{ inputs.commit }}
           make -j$(nproc) faithful debug vc
           mkdir build
-          mv polishedcrystal-faithful-debug-3.2.0-beta_vc.gbc build/polishedcrystal-faithful-debug-3.2.0-beta-${{ inputs.commit }}.gbc
-          mv polishedcrystal-faithful-debug-3.2.0-beta.patch build/polishedcrystal-faithful-debug-3.2.0-beta-${{ inputs.commit }}.patch
-          mv polishedcrystal-faithful-debug-3.2.0-beta_vc.sym build/polishedcrystal-faithful-debug-3.2.0-beta-${{ inputs.commit }}.sym
+          mv polishedcrystal-faithful-debug-3.2.0_vc.gbc build/polishedcrystal-faithful-debug-dev-${{ inputs.commit }}.gbc
+          mv polishedcrystal-faithful-debug-3.2.0.patch build/polishedcrystal-faithful-debug-dev-${{ inputs.commit }}.patch
+          mv polishedcrystal-faithful-debug-3.2.0_vc.sym build/polishedcrystal-faithful-debug-dev-${{ inputs.commit }}.sym
       
       - id: upload-polisheddebug-faithful
         name: "Upload polisheddebug-faithful artifacts"
@@ -223,7 +223,7 @@ jobs:
           name: "polisheddebug-faithful"
           retention-days: 1
           path: |
-            build/polishedcrystal-faithful-debug-3.2.0-beta-${{ inputs.commit }}.*
+            build/polishedcrystal-faithful-debug-dev-${{ inputs.commit }}.*
       
   build-polishedcrystal-bsp:
     name: "Build polishedcrystal-bsp"
@@ -265,7 +265,7 @@ jobs:
           git checkout ${{ inputs.commit }}
           make -j$(nproc) bsp
           mkdir build
-          mv polishedcrystal-3.2.0-beta.bsp build/polishedcrystal-savepatch-3.2.0-beta-${{ inputs.commit }}.bsp
+          mv polishedcrystal-3.2.0.bsp build/polishedcrystal-savepatch-dev-${{ inputs.commit }}.bsp
 
       - id: upload-polishedcrystal-savepatch
         name: "Upload polishedcrystal savepatch"
@@ -274,4 +274,4 @@ jobs:
           name: "polishedcrystal-savepatch"
           retention-days: 1
           path: |
-            build/polishedcrystal-savepatch-3.2.0-beta-${{ inputs.commit }}.*
+            build/polishedcrystal-savepatch-dev-${{ inputs.commit }}.*
