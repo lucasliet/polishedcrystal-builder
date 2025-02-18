@@ -58,7 +58,7 @@ jobs:
         run: |
           if [ -z "${{ inputs.commit }}" ]; then
             echo "short_sha=${{ steps.lastofficialcommit.outputs.shorthash }}" >> $GITHUB_OUTPUT
-            echo "commit_message=$(echo ${{ steps.lastofficialcommit.outputs.description }} | head -n 1)" >> $GITHUB_OUTPUT
+            echo "commit_message=$(echo "${{ steps.lastofficialcommit.outputs.description }}" | head -n 1)" >> $GITHUB_OUTPUT
           else
             commits=$(curl -s https://api.github.com/repos/Rangi42/polishedcrystal/commits/${{ inputs.commit }})
             echo "short_sha=$(echo $commits | jq -r '.sha' | cut -c1-8)" >> $GITHUB_OUTPUT
