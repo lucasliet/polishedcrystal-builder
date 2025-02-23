@@ -68,7 +68,7 @@ jobs:
         name: "Check if should compile"
         run: |
           tag="${{ env.NIGHTLY_TAG }}-${{ steps.set-sha.outputs.short_sha }}"
-          previous_releases=$(curl -s https://api.github.com/repos/lucasliet/polishedcrystal-builder/releases | jq -r '.[].name')
+          previous_releases=$(curl -s https://api.github.com/repos/lucasliet/polishedcrystal-builder/releases | jq -r '.[].tag_name')
           if echo "$previous_releases" | grep -q "$tag"; then
             echo "Compile is unecessary, latest commit already compiled $tag"
           else
