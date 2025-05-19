@@ -80,7 +80,7 @@ jobs:
     name: "Build releases"
     needs: check-build
     if: ${{ needs.check-build.outputs.should_compile }}
-    uses: lucasliet/polishedcrystal-builder/.github/workflows/build.yml@main
+    uses: ./.github/workflows/build.yml
     with:
       commit: "${{ needs.check-build.outputs.short_sha }}"
 
@@ -88,7 +88,7 @@ jobs:
     name: "Clean old releases"
     needs: check-build
     if: ${{ needs.check-build.outputs.should_compile }}
-    uses: lucasliet/polishedcrystal-builder/.github/workflows/clean_releases.yml@main
+    uses: ./.github/workflows/clean_releases.yml
 
   update_release:
     name: "Update last release to pre-release"
