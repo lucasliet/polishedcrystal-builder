@@ -9,8 +9,8 @@ on:
         required: true
 
 env:
-  PC_VERSION: "3.2.0"
-  RGBDS_VERSION: "v0.9.4"
+  PC_VERSION: "3.2.1"
+  RGBDS_VERSION: "v1.0.0"
 
 jobs:
   build-polishedcrystal:
