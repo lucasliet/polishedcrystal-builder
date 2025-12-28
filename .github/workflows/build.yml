@@ -9,7 +9,7 @@ on:
         required: true
 
 env:
-  PC_VERSION: "3.2.1"
+  PC_VERSION: "3.2.3"
   RGBDS_VERSION: "v1.0.0"
 
 jobs:
